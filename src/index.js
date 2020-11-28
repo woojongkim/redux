@@ -1,8 +1,23 @@
 //@ts-check
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+const up = document.getElementById("up");
+const down = document.getElementById("down");
+const number = document.querySelector("span");
 
+let count = 0;
 
-ReactDOM.render(<App/>,document.getElementById('root'));
+const updateText = () => {
+  number.innerText = count;
+};
 
+const handleUp = () => {
+  count++;
+  updateText();
+};
+
+const handleDown = () => {
+  count--;
+  updateText();
+};
+
+up.addEventListener("click", handleUp);
+down.addEventListener("click", handleDown);
