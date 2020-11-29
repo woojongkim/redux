@@ -1,23 +1,26 @@
 //@ts-check
+import { createStore } from "redux";
+
 const up = document.getElementById("up");
 const down = document.getElementById("down");
 const number = document.querySelector("span");
 
-let count = 0;
-
-const updateText = () => {
-  number.innerText = count;
+const countModifier = (count = 0, action) => {
+  console.log(count, action);
+  switch (action.type) {
+    case "up":
+      count++;
+      break;
+    case "down":
+      count--;
+      break;
+  }
+  return count;
 };
+const countStore = createStore(countModifier);
+countStore.subscribe(() => {
+  number.innerText = countStore.getState();
+});
 
-const handleUp = () => {
-  count++;
-  updateText();
-};
-
-const handleDown = () => {
-  count--;
-  updateText();
-};
-
-up.addEventListener("click", handleUp);
-down.addEventListener("click", handleDown);
+up.addEventListener("click", () => countStore.dispatch({ type: "up" }));
+down.addEventListener("click", () => countStore.dispatch({ type: "down" }));
